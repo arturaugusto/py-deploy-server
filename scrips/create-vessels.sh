@@ -37,7 +37,7 @@ if [ ! -d ~/vassals/$port ]; then
   cd $prevdir
   echo "<VirtualHost *:80>" > /etc/apache2/sites-enabled/$port.conf
   echo "  ServerAdmin webmaster@localhost" >> /etc/apache2/sites-enabled/$port.conf
-  echo "  ErrorLog /home/vassals_log/`logname`/$port.log" >> /etc/apache2/sites-enabled/$port.conf
+  echo "  ErrorLog /home/`logname`/vassals_log/$port.log" >> /etc/apache2/sites-enabled/$port.conf
   echo "  ServerName `hostname`" >> /etc/apache2/sites-enabled/$port.conf
   echo "  ProxyPass /$port uwsgi://127.0.0.1:$port/" >> /etc/apache2/sites-enabled/$port.conf
   echo "</VirtualHost>" >> /etc/apache2/sites-enabled/$port.conf
