@@ -20,7 +20,7 @@ if [ ! -d ~/vassals/$port ]; then
   echo "chmod-socket = 660" >> ~/vassals/$port.ini
   echo "vacuum = true" >> ~/vassals/$port.ini
   echo "die-on-term = true" >> ~/vassals/$port.ini
-  echo "chdir = /home/`whoami`/pyprojects/$port" >> ~/vassals/$port.ini
+  echo "chdir = /home/`logname`/pyprojects/$port" >> ~/vassals/$port.ini
   
   prevdir=`pwd`
   
@@ -36,7 +36,7 @@ if [ ! -d ~/vassals/$port ]; then
   echo "<VirtualHost *:80>" > /etc/apache2/sites-enabled/$port.conf
   echo "  ServerAdmin webmaster@localhost" >> /etc/apache2/sites-enabled/$port.conf
   echo "  ErrorLog ${APACHE_LOG_DIR}/$port.log" >> /etc/apache2/sites-enabled/$port.conf
-  echo "  ServerName `cat DOMAIN`" >> /etc/apache2/sites-enabled/$port.conf
+  echo "  ServerName `hostname`" >> /etc/apache2/sites-enabled/$port.conf
   echo "  ProxyPass /$port uwsgi://127.0.0.1:$port/" >> /etc/apache2/sites-enabled/$port.conf
   echo "</VirtualHost>" >> /etc/apache2/sites-enabled/$port.conf
 
