@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 SITE={domain_name}
 

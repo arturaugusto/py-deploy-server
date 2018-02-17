@@ -1,0 +1,13 @@
+[Unit]
+Description=uWSGI emperor mode
+After=network.target
+
+[Service]
+User={USER}
+Group=www-data
+WorkingDirectory=/home/{USER}/
+Environment="PATH=/home/{USER}/.local/bin"
+ExecStart=/home/{USER}/.local/bin/uwsgi --emperor /home/{USER}/vassals/
+ExecStop=killall uwsgi
+[Install]
+WantedBy=multi-user.target
