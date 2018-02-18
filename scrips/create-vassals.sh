@@ -16,6 +16,14 @@ echo "  Include vassals.conf" >> /etc/apache2/sites-enabled/000-default.conf
 echo "</VirtualHost>" >> /etc/apache2/sites-enabled/000-default.conf
 
 if [ ! -d ~/vassals/$port ]; then
+    
+  # Virtual env
+  mkdir -p ~/pyprojects/$port
+  cd ~/pyprojects/$port
+  virtualenv -p python3 env
+
+  # app
+  mkdir -p ~/pyprojects/$port/app
 
   # Vassal conf 
   echo "[uwsgi]" > ~/vassals/$port.ini
@@ -26,16 +34,10 @@ if [ ! -d ~/vassals/$port ]; then
   echo "chmod-socket = 660" >> ~/vassals/$port.ini
   echo "vacuum = true" >> ~/vassals/$port.ini
   echo "die-on-term = true" >> ~/vassals/$port.ini
-  echo "chdir = /home/`logname`/pyprojects/$port" >> ~/vassals/$port.ini
-  
-  prevdir=`pwd`
-  
-  # Virtual env
-  mkdir -p ~/pyprojects/$port
-  cd ~/pyprojects/$port
-  virtualenv -p python3 venv
-  source venv/bin/activate
-  deactivate
+  echo "chdir = /home/`logname`/pyprojects/$port/app" >> ~/vassals/$port.ini
+  echo "virtualenv = /home/`logname`/pyprojects/$port/env"
+  echo "logger = file:/home/`logname`/pyprojects/$port/uwsgi.log"
+  echo "binary-path = home/`logname`/pyprojects/$port/env/bin/uwsgi"
 
   # apache proxy conf
   echo "ProxyPass /$port uwsgi://127.0.0.1:$port/" >> /etc/apache2/vassals.conf
@@ -45,5 +47,14 @@ if [ ! -d ~/vassals/$port ]; then
   sudo apachectl -t
   sudo apachectl -k graceful
 
-  cd $prevdir
 fi
+
+cd ~/pyprojects/$port
+
+source ~/pyprojects/$port/env/bin/activate
+~/pyprojects/$port/env/bin/pip3 install -r ./$port/app/requirements.txt
+deactivate
+
+# refresh app
+sudo touch --no-dereference ~/vassals/$port.ini
+
