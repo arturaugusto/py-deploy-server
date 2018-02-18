@@ -1,1 +1,0 @@
-#sudo touch --no-dereference 5005.ini 

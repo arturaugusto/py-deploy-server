@@ -1,6 +1,7 @@
 #!/bin/bash
 while [[ "$#" > 1 ]]; do case $1 in
     --port) port="$2";;
+    --git) git="$2";;
     *) break;;
   esac; shift; shift
 done
@@ -47,12 +48,18 @@ if [ ! -d ~/vassals/$port ]; then
   sudo apachectl -t
   sudo apachectl -k graceful
 
+  # clone repository to path
+  git clone $git ~/pyprojects/$port/app
+
+
 fi
 
-cd ~/pyprojects/$port
+# update local app
+cd ~/pyprojects/$port/app
+git pull origin master
 
 source ~/pyprojects/$port/env/bin/activate
-~/pyprojects/$port/env/bin/pip3 install -r ./$port/app/requirements.txt
+~/pyprojects/$port/env/bin/pip3 install -r ~/pyprojects/$port/app/requirements.txt
 deactivate
 
 # refresh app
