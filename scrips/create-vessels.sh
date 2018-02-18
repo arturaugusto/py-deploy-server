@@ -12,6 +12,7 @@ mkdir -p ~/pyprojects
 echo "<VirtualHost *:80>" > /etc/apache2/sites-enabled/000-default.conf
 echo "  ServerAdmin webmaster@localhost" >> /etc/apache2/sites-enabled/000-default.conf
 echo "  ErrorLog /home/`logname`/apache_error.log" >> /etc/apache2/sites-enabled/000-default.conf
+echo "  Include vassals.conf" >> /etc/apache2/sites-enabled/000-default.conf
 echo "</VirtualHost>" >> /etc/apache2/sites-enabled/000-default.conf
 
 if [ ! -d ~/vassals/$port ]; then
@@ -32,7 +33,7 @@ if [ ! -d ~/vassals/$port ]; then
   # Virtual env
   mkdir -p ~/pyprojects/$port
   cd ~/pyprojects/$port
-  virtualenv venv
+  virtualenv -p python3 venv
   source venv/bin/activate
   deactivate
 
