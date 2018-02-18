@@ -6,10 +6,13 @@ while [[ "$#" > 1 ]]; do case $1 in
 done
 
 mkdir -p ~/vassals
-mkdir -p ~/vassals_log
 
 mkdir -p ~/pyprojects
 
+echo "<VirtualHost *:80>" > /etc/apache2/sites-enabled/000-default.conf
+echo "  ServerAdmin webmaster@localhost" >> /etc/apache2/sites-enabled/000-default.conf
+echo "  ErrorLog /home/`logname`/apache_error.log" >> /etc/apache2/sites-enabled/000-default.conf
+echo "</VirtualHost>" >> /etc/apache2/sites-enabled/000-default.conf
 
 if [ ! -d ~/vassals/$port ]; then
 
@@ -33,16 +36,13 @@ if [ ! -d ~/vassals/$port ]; then
   source venv/bin/activate
   deactivate
 
-  # Apache conf
-  cd $prevdir
-  echo "<VirtualHost *:80>" > /etc/apache2/sites-enabled/$port.conf
-  echo "  ServerAdmin webmaster@localhost" >> /etc/apache2/sites-enabled/$port.conf
-  echo "  ErrorLog /home/`logname`/vassals_log/$port.log" >> /etc/apache2/sites-enabled/$port.conf
-  echo "  ServerName `hostname`" >> /etc/apache2/sites-enabled/$port.conf
-  echo "  ProxyPass /$port uwsgi://127.0.0.1:$port/" >> /etc/apache2/sites-enabled/$port.conf
-  echo "</VirtualHost>" >> /etc/apache2/sites-enabled/$port.conf
-
+  # apache proxy conf
+  echo "ProxyPass /$port uwsgi://127.0.0.1:$port/" >> /etc/apache2/vassals.conf
+  # remove possible duplicates
+  sed -i '$!N; /^\(.*\)\n\1$/!P; D' /etc/apache2/vassals.conf
+  
   sudo apachectl -t
   sudo apachectl -k graceful
 
+  cd $prevdir
 fi
