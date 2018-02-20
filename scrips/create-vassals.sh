@@ -2,6 +2,7 @@
 while [[ "$#" > 1 ]]; do case $1 in
     --port) port="$2";;
     --git) git="$2";;
+    --name) name="$2";;
     *) break;;
   esac; shift; shift
 done
@@ -41,7 +42,7 @@ if [ ! -d ~/vassals/$port ]; then
   echo "binary-path = home/`logname`/pyprojects/$port/env/bin/uwsgi"
 
   # apache proxy conf
-  echo "ProxyPass /$port uwsgi://127.0.0.1:$port/" >> /etc/apache2/vassals.conf
+  echo "ProxyPass /$name uwsgi://127.0.0.1:$port/" >> /etc/apache2/vassals.conf
   # remove possible duplicates
   sed -i '$!N; /^\(.*\)\n\1$/!P; D' /etc/apache2/vassals.conf
   

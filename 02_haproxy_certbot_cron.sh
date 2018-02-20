@@ -4,9 +4,9 @@ IP_ADDR=`cat IP_ADDR`
 # ensure haproxy is stopped
 #netstat -na | grep ':80.*LISTEN'
 
-sudo certbot certonly --standalone --preferred-challenges http --http-01-port 80 -d example.com -d www.example.com
+sudo certbot certonly --standalone --preferred-challenges http --http-01-port 80 -d $DOMAIN -d www.$DOMAIN
 
-sudo ls /etc/letsencrypt/live/example.com
+sudo ls /etc/letsencrypt/live/$DOMAIN
 
 sudo mkdir -p /etc/haproxy/certs
 
