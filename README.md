@@ -12,13 +12,12 @@ The final solution uses the following softwares/technologies:
 - Certbot: https://certbot.eff.org/
 - Virtualenv: https://pypi.python.org/pypi/virtualenv
 
-Prerequisites: A domain name.
-
+Prerequisites: A domain name and a GNU/Linux box.
 
 
 references:
 
-https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uwsgi-and-nginx-on-ubuntu-14-04
-https://mitchjacksontech.github.io/How-To-Flask-Python-Centos7-Apache-uWSGI/
-https://www.digitalocean.com/community/tutorials/how-to-secure-haproxy-with-let-s-encrypt-on-ubuntu-14-04
-https://uwsgi-docs.readthedocs.io/en/latest/Apache.html#mod-proxy-uwsgi
+1. https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uwsgi-and-nginx-on-ubuntu-14-04
+1. https://mitchjacksontech.github.io/How-To-Flask-Python-Centos7-Apache-uWSGI/
+1. https://www.digitalocean.com/community/tutorials/how-to-secure-haproxy-with-let-s-encrypt-on-ubuntu-14-04
+1. https://uwsgi-docs.readthedocs.io/en/latest/Apache.html#mod-proxy-uwsgi
