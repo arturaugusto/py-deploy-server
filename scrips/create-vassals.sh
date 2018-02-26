@@ -55,6 +55,9 @@ if [ ! -d ~/vassals/$port ]; then
 
 fi
 
+sudo chown -R `logname` ~/pyprojects/$port/
+sudo chgrp -R `logname` ~/pyprojects/$port/
+
 # update local app
 cd ~/pyprojects/$port/app
 git pull origin master
