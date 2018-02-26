@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import request
 import json
+from subprocess import call
 application = Flask(__name__)
 
 def get_port(name):
@@ -22,9 +23,8 @@ def hello():
   git = request.json['repository']['clone_url']
   name = 'gh_' + (request.json['repository']['clone_url'].replace('/', '_'))
   port = get_port(name)
-  # TODO: Execute script send parameters
-  # with a sudo user that don't require password
-  return 'Ok'
+  call(['create-vassals.sh', '--port', str(port), '--git', git, '--name', name])
+  return ''
 
 if __name__ == "__main__":
   application.run(host='0.0.0.0')

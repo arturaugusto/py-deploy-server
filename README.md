@@ -12,7 +12,9 @@ The final solution uses the following softwares/technologies:
 - Certbot: https://certbot.eff.org/
 - Virtualenv: https://pypi.python.org/pypi/virtualenv
 
-Prerequisites: A domain name and a GNU/Linux box.
+Prerequisites: A domain name and a GNU/Linux box with a sudo user capable of running commands without password:
+https://www.digitalocean.com/community/tutorials/how-to-create-a-sudo-user-on-ubuntu-quickstart
+https://askubuntu.com/questions/168461/how-do-i-sudo-without-having-to-enter-my-password#168470
 
 
 references:
