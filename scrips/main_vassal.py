@@ -23,7 +23,7 @@ def hello():
   git = request.json['repository']['clone_url']
   name = 'gh_' + (request.json['repository']['clone_url'].replace('/', '_'))
   port = get_port(name)
-  call(['create-vassals.sh', '--port', str(port), '--git', git, '--name', name])
+  call(['sudo', 'create-vassals.sh', '--port', str(port), '--git', git, '--name', name])
   return ''
 
 if __name__ == "__main__":
