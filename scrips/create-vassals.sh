@@ -13,12 +13,12 @@ mkdir -p ~/pyprojects
 
 echo "<VirtualHost *:80>" > /etc/apache2/sites-enabled/000-default.conf
 echo "  ServerAdmin webmaster@localhost" >> /etc/apache2/sites-enabled/000-default.conf
-echo "  ErrorLog /home/`logname`/apache_error.log" >> /etc/apache2/sites-enabled/000-default.conf
+echo "  ErrorLog /home/$SUDO_USER/apache_error.log" >> /etc/apache2/sites-enabled/000-default.conf
 echo "  Include vassals.conf" >> /etc/apache2/sites-enabled/000-default.conf
 echo "</VirtualHost>" >> /etc/apache2/sites-enabled/000-default.conf
 
 if [ ! -d ~/vassals/$port ]; then
-    
+
   # Virtual env
   mkdir -p ~/pyprojects/$port
   cd ~/pyprojects/$port
@@ -36,16 +36,16 @@ if [ ! -d ~/vassals/$port ]; then
   echo "chmod-socket = 660" >> ~/vassals/$port.ini
   echo "vacuum = true" >> ~/vassals/$port.ini
   echo "die-on-term = true" >> ~/vassals/$port.ini
-  echo "chdir = /home/`logname`/pyprojects/$port/app" >> ~/vassals/$port.ini
-  echo "virtualenv = /home/`logname`/pyprojects/$port/env"
-  echo "logger = file:/home/`logname`/pyprojects/$port/uwsgi.log"
-  echo "binary-path = home/`logname`/pyprojects/$port/env/bin/uwsgi"
+  echo "chdir = /home/$SUDO_USER/pyprojects/$port/app" >> ~/vassals/$port.ini
+  echo "virtualenv = /home/$SUDO_USER/pyprojects/$port/env" >> ~/vassals/$port.ini
+  echo "logger = file:/home/$SUDO_USER/pyprojects/$port/uwsgi.log" >> ~/vassals/$port.ini
+  echo "binary-path = home/$SUDO_USER/pyprojects/$port/env/bin/uwsgi" >> ~/vassals/$port.ini
 
   # apache proxy conf
   echo "ProxyPass /$name uwsgi://127.0.0.1:$port/" >> /etc/apache2/vassals.conf
   # remove possible duplicates
   sed -i '$!N; /^\(.*\)\n\1$/!P; D' /etc/apache2/vassals.conf
-  
+
   sudo apachectl -t
   sudo apachectl -k graceful
 
@@ -55,8 +55,8 @@ if [ ! -d ~/vassals/$port ]; then
 
 fi
 
-sudo chown -R `logname` ~/pyprojects/$port/
-sudo chgrp -R `logname` ~/pyprojects/$port/
+sudo chown -R $SUDO_USER ~/pyprojects/$port/
+sudo chgrp -R $SUDO_USER ~/pyprojects/$port/
 
 # update local app
 cd ~/pyprojects/$port/app
@@ -68,4 +68,3 @@ deactivate
 
 # refresh app
 sudo touch --no-dereference ~/vassals/$port.ini
-

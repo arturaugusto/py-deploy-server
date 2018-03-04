@@ -23,3 +23,5 @@ references:
 1. https://mitchjacksontech.github.io/How-To-Flask-Python-Centos7-Apache-uWSGI/
 1. https://www.digitalocean.com/community/tutorials/how-to-secure-haproxy-with-let-s-encrypt-on-ubuntu-14-04
 1. https://uwsgi-docs.readthedocs.io/en/latest/Apache.html#mod-proxy-uwsgi
+1. https://stackoverflow.com/questions/28228392/failed-to-verify-github-x-hub-signature-in-my-application#28325909
+1. https://docs.python.org/3.5/library/hmac.html
